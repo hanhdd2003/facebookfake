@@ -9,9 +9,9 @@ package controller;
  *
  * @author Asus
  */
-public class MyQueue {
-    private Node head;
-    private Node tail;
+public class MyQueue<T> {
+    private Node<T> head;
+    private Node<T> tail;
     private int size;
 
     public MyQueue() {
@@ -29,8 +29,8 @@ public class MyQueue {
         this.size = 0;
     }
 
-    public void enqueue(Vertex x) {
-        Node newNode = new Node(x);
+    public void enqueue(Vertex<T> x) {
+        Node<T> newNode = new Node<>(x);
 
         if (isEmpty()) {
             this.head = this.tail = newNode;
@@ -42,19 +42,19 @@ public class MyQueue {
         this.size++;
     }
 
-    public Node dequeue() {
+    public Node<T> dequeue() {
         if (isEmpty()) {
             System.out.println("rỗng");
             return null;
         }
 
-        Node temp = this.head;
+        Node<T> temp = this.head;
         this.head = this.head.next;
         this.size--;
         return temp;
     }
 
-    public Node first() {
+    public Node<T> first() {
         if (isEmpty()) {
             System.out.println("rỗng");
             return null;
@@ -64,7 +64,7 @@ public class MyQueue {
     }
 
     public void traverse() {
-        Node currunt = this.head;
+        Node<T> currunt = this.head;
 
         while (currunt != null) {
             System.out.print(currunt.data + " ");

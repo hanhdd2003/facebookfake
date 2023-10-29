@@ -13,32 +13,32 @@ import java.util.Set;
  *
  * @author Asus
  */
-public class Vertex {
+public class Vertex<T> {
 
-    String label;
+    T label;
 
-    Set<Vertex> adjList = new HashSet<>();
+    Set<Vertex<T>> adjList = new HashSet<>();
 
-    public Vertex(String label) {
+    public Vertex(T label) {
         this.label = label;
     }
 
-    public String getLabel() {
-        return label;
+    public T getLabel() {
+        return this.label;
     }
-
-    public Set<Vertex> getAdjList() {
+    
+    public Set<Vertex<T>> getAdjList() {
         return adjList;
     }
-
-    public void addNeighbor(Vertex neighbor) {
+    
+    public void addNeighbor(Vertex<T> neighbor) {
         adjList.add(neighbor);
     }
 
     public void displayADJ() {
         System.out.println("Adj List: ");
-        for (Vertex v : adjList) {
-            System.out.println(v.label);
+        for (Vertex<T> v : adjList) {
+            System.out.print(v.label + " ");
         }
     }
 }

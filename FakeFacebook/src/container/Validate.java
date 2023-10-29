@@ -5,6 +5,7 @@
  */
 package container;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -60,8 +61,8 @@ public class Validate {
 
     public String getDateNow() {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter pattern = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        return now.format(pattern);
+        DateTimeFormatter f = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        return now.format(f);
     }
 
     public String instring(String a) {
@@ -80,7 +81,7 @@ public class Validate {
                 }
                 throw new Exception();
             } catch (Exception e) {
-                System.out.println("Ivalid type post");
+                System.out.println("Must in status, story, reels");
             }
         }
     }
@@ -96,7 +97,7 @@ public class Validate {
                 }
                 throw new Exception();
             } catch (Exception e) {
-                System.out.println("Ivalid privacy");
+                System.out.println("Must in friend, public, private");
             }
         }
     }
@@ -113,7 +114,7 @@ public class Validate {
                 }
                 throw new Exception();
             } catch (Exception e) {
-                System.out.println("Ivalid Emotion");
+                System.out.println("Must input Like, Love, haha, Angry, WOW, sad");
             }
         }
     }
@@ -125,7 +126,7 @@ public class Validate {
                 System.out.print("Enter ID: ");
                 s = sc.nextLine();
                 if (s.matches("[a-zA-Z0-9]+")) {
-                    return s;
+                    return s.toUpperCase();
                 }
                 throw new Exception();
             } catch (Exception e) {
@@ -149,9 +150,25 @@ public class Validate {
             }
         }
     }
-
-    public static void main(String[] args) {
-        Validate val = new Validate();
-        System.out.println(val.inName());
+    
+    public int inputChoice(int min, int max) {
+        while (true) {            
+            try {
+                System.out.print("Enter your choice: ");
+                String input = sc.nextLine();
+                
+                int result = Integer.parseInt(input);
+                
+                if (result < min || result > max) {
+                    System.out.println("Must input number from " + min + " to " + max);
+                    continue;
+                }
+                return result;
+            } catch (NumberFormatException e) {
+                System.out.println("Must input a number!! Please try again");
+                continue;
+            }
+        }
     }
+
 }

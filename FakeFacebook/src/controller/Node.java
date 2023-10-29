@@ -9,12 +9,12 @@ package controller;
  *
  * @author Asus
  */
-public class Node {
+public class Node<T> {
 
-    Vertex data;
-    Node next;
+    Vertex<T> data;
+    Node<T> next;
 
-    public Node(Vertex data) {
+    public Node(Vertex<T> data) {
         this.data = data;
         this.next = null;
     }
