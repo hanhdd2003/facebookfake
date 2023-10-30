@@ -20,8 +20,8 @@ import object.User;
  */
 public class Manager {
 
-    private Validate val = new Validate();
-    private Controller con = new Controller();
+    private final Validate val = new Validate();
+    private final Controller con = new Controller();
 
     //menu ===============================================
     public int menu() {

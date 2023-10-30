@@ -10,6 +10,7 @@ package controller;
  * @author Asus
  */
 public class MyQueue<T> {
+
     private Node<T> head;
     private Node<T> tail;
     private int size;

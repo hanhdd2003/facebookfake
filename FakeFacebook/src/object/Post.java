@@ -7,9 +7,6 @@ package object;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map.Entry;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 /**
  *
@@ -68,8 +65,8 @@ public class Post {
         return emotions;
     }
 
-    public void setEmotion(HashMap<User, String> emotion) {
-        this.emotions = emotion;
+    public void setEmotion(User s, String emotion) {
+        emotions.put(s, emotion);
     }
 
     public String getDayPost() {
@@ -88,8 +85,20 @@ public class Post {
         return numberShare;
     }
 
-    public void setNumberShare(int numberShare) {
-        this.numberShare = numberShare;
+    public int getNumberComment() {
+        int count = 0;
+        ArrayList<String> listComment = new ArrayList<>();
+        for (User user : comments.keySet()) {
+            listComment = comments.get(user);
+            for (String s : listComment) {
+                count++;
+            }
+        }
+        return count;
+    }
+    
+    public void share() {
+        this.numberShare++;
     }
 
     public User getUserPost() {
@@ -131,18 +140,6 @@ public class Post {
         return count;
     }
 
-    public int getNumberComment() {
-        int count = 0;
-        ArrayList<String> listComment = new ArrayList<>();
-        for (User user : comments.keySet()) {
-            listComment = comments.get(user);
-            for (String s : listComment) {
-                count++;
-            }
-        }
-        return count;
-    }
-
     public void addComment(User user, String comment) {
         if (this.comments.containsKey(user)) {
             this.comments.get(user).add(comment);
@@ -168,20 +165,42 @@ public class Post {
         this.emotions.remove(user);
     }
 
-    public void share() {
-        this.numberShare++;
-    }
-
     public void display() {
         System.out.println("+------------------------------------------------------------+");
         System.out.printf("| %5s%20s%20s\n", "", userPost, "|");
+        System.out.printf("| %-15s%-15s%-15s%-14s%-15s\n", "ID", "type", "privacy", "dayPost", "|");
         System.out.printf("| %-15s%-15s%-15s%-14s%-15s\n", id, type, privacy, dayPost, "|");
         System.out.printf("%-60s %-40s\n", "|", "|");
         System.out.printf("%-1s%-60s%-20s\n", "|", content, "|");
         System.out.printf("%-60s %-40s\n", "|", "|");
+        System.out.printf("%-5s%-20s%-20s%-16s%-10s\n", "|", "Emotion", "Comment", "Share", "|");
         System.out.printf("%-5s%-20s%-20s%-16s%-10s\n", "|", this.getNumberEmotions(), this.getNumberComment(), numberShare, "|");
         System.out.println("+------------------------------------------------------------+");
     }
+    
+    public void displayEmotionDetail(){
+        System.out.println("List emotion");
+        String emotion;
+        for(User u : emotions.keySet()){
+            emotion = emotions.get(u);
+            System.out.println(u.getName() + ": "+ emotion);
+        }
+    }
+    
+    public void displayCommentDetail(){
+        ArrayList<String> listCMT = new ArrayList<>();
+        for (User user : comments.keySet()) {
+            listCMT = comments.get(user);
+            System.out.println(user.getName()+": ");
+            for (String string : listCMT) {
+                System.out.println(string);
+            }
+            System.out.println();
+        }
+    }
+    
+    
+    
 
     public void display1() {
         System.out.println("+-----------------------------------------------------+");
@@ -231,17 +250,17 @@ public class Post {
 
     public void displayListEmotion() {
         if (!emotions.isEmpty()) {
-            
+
             HashMap<String, Integer> emotionCounts = new HashMap<>();
-            
+
             for (String emotion : emotions.values()) {
                 emotionCounts.put(emotion, emotionCounts.getOrDefault(emotion, 0) + 1);
             }
-            
+
             emotionCounts.forEach((emotion, count) -> {
                 System.out.println(emotion + " " + count);
             });
-            
+
             /*
             C2:
             emotions.entrySet().stream()
@@ -249,21 +268,18 @@ public class Post {
                     .forEach((emotion, count) -> {
                         System.out.println(emotion + " " + count);
                     });
-            */
-            
-        } 
-        else {
+             */
+        } else {
             System.out.println("No emotion");
         }
     }
-    
+
     public void displayListEmotionDetail() {
         if (!emotions.isEmpty()) {
             emotions.forEach((user, emotion) -> {
                 System.out.println(user.getName() + " express " + emotion);
             });
-        }
-        else {
+        } else {
             System.out.println("No emotion");
         }
     }

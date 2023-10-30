@@ -6,10 +6,6 @@
 package main;
 
 import container.Manager;
-import java.util.ArrayList;
-import java.util.HashMap;
-import object.Post;
-import object.User;
 
 /**
  *

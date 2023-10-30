@@ -5,7 +5,6 @@
  */
 package controller;
 
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,11 +25,11 @@ public class Vertex<T> {
     public T getLabel() {
         return this.label;
     }
-    
+
     public Set<Vertex<T>> getAdjList() {
         return adjList;
     }
-    
+
     public void addNeighbor(Vertex<T> neighbor) {
         adjList.add(neighbor);
     }

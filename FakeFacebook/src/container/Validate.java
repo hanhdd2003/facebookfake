@@ -5,7 +5,6 @@
  */
 package container;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
@@ -30,7 +29,7 @@ public class Validate {
                 year = Integer.parseInt(sc.nextLine());
 
                 if (isValidDate(day, month, year)) {
-                    return day+"/"+month+"/"+year;
+                    return day + "/" + month + "/" + year;
                 } else {
                     System.out.println("Invalid date. Please try again.");
                 }
@@ -150,15 +149,15 @@ public class Validate {
             }
         }
     }
-    
+
     public int inputChoice(int min, int max) {
-        while (true) {            
+        while (true) {
             try {
                 System.out.print("Enter your choice: ");
                 String input = sc.nextLine();
-                
+
                 int result = Integer.parseInt(input);
-                
+
                 if (result < min || result > max) {
                     System.out.println("Must input number from " + min + " to " + max);
                     continue;
@@ -166,7 +165,7 @@ public class Validate {
                 return result;
             } catch (NumberFormatException e) {
                 System.out.println("Must input a number!! Please try again");
-                continue;
+
             }
         }
     }

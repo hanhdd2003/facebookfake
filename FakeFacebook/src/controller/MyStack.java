@@ -5,8 +5,6 @@
  */
 package controller;
 
-import java.util.LinkedList;
-
 /**
  *
  * @author Asus

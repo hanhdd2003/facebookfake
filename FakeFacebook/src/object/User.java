@@ -8,7 +8,6 @@ package object;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  *
@@ -24,6 +23,7 @@ public class User {
     private final HashMap<Post, ArrayList<String>> commented = new HashMap<>();
     private final HashMap<Post, String> emotion = new HashMap<>();
     private final HashMap<Post, Integer> amountShared = new HashMap<>();
+    private ArrayList<String> notification = new ArrayList<>();
 
     public User() {
     }
@@ -82,6 +82,21 @@ public class User {
 
     public void setDateOfBirth(String dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public ArrayList<String> getNotification() {
+        return notification;
+    }
+
+    public void addNotification(String notification) {
+        this.notification.add(notification);
+    }
+    
+    public void displayNotification(){
+        System.out.println("Notification: ");
+        for(String s : notification){
+            System.out.println(s);
+        }
     }
 
 //=======================================================================
@@ -213,4 +228,14 @@ public class User {
         return String.format("%-5s%-20s%-15s%-20s\n", this.userID, this.name, this.address, this.dateOfBirth);
     }
 
+    public void displayAllCMT(Post s){
+        ArrayList<String> listCMT = new ArrayList<>();
+        if(commented.containsKey(s)){
+            listCMT = commented.get(s);
+            for (String string : listCMT) {
+                System.out.println(string);
+            }
+        }
+    }
+    
 }
