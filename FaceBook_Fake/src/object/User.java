@@ -15,6 +15,8 @@ import java.util.Map;
  */
 public class User {
 
+    private String username;
+    private String password;
     private String userID;
     private String name;
     private String address;
@@ -28,11 +30,13 @@ public class User {
     public User() {
     }
 
-    public User(String id, String name, String address, String dateOfBirth) {
+    public User(String id, String name, String address, String dateOfBirth, String username, String password) {
         this.userID = id;
         this.name = name;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
+        this.username = username;
+        this.password = password;
     }
 //==================================================================================
 
@@ -54,6 +58,15 @@ public class User {
 
     public ArrayList<Post> getPosts() {
         return posts;
+    }
+
+    public Post getPostById(String id) {
+        for (Post post : posts) {
+            if (post.getId().equalsIgnoreCase(id)) {
+                return post;
+            }
+        }
+        return null;
     }
 
     public HashMap<Post, ArrayList<String>> getCommented() {
@@ -84,6 +97,22 @@ public class User {
         this.dateOfBirth = dateOfBirth;
     }
 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public ArrayList<String> getNotification() {
         return notification;
     }
@@ -91,10 +120,10 @@ public class User {
     public void addNotification(String notification) {
         this.notification.add(notification);
     }
-    
-    public void displayNotification(){
+
+    public void displayNotification() {
         System.out.println("Notification: ");
-        for(String s : notification){
+        for (String s : notification) {
             System.out.println(s);
         }
     }
@@ -103,10 +132,10 @@ public class User {
     public boolean addPost(Post post) {
         for (Post existingPost : posts) {
             if (existingPost != null && existingPost.getId() != null && existingPost.getId().equals(post.getId())) {
-                return false; 
+                return false;
             }
         }
-        
+
         this.posts.add(post);
         return true;
     }
@@ -163,43 +192,51 @@ public class User {
         }
     }
 
-    public void editComment(Post p, String oldComment, String newComment) {
-        p.setComment(this, oldComment, newComment);
-        
-        if (commented.containsKey(p) && commented.get(p).contains(oldComment)) {
-            commented.get(p).remove(oldComment);
-            commented.get(p).add(newComment);
-        }
-    }
-
-    public boolean deleteComment(String postId, String comment) {
-        Post port = this.getPost(postId);
-        if (port != null) {
-            port.deleteComment(this, comment);
-            if (commented.containsKey(port) && commented.get(port).contains(comment)) {
-                commented.get(port).remove(comment);
+    public boolean editComment(Post p, String oldComment, String newComment) {
+        ArrayList<String> cmt;
+        if (commented.containsKey(p)) {
+            cmt = commented.get(p);
+            if (cmt.contains(oldComment)) {
+                p.setComment(this, oldComment, newComment);
+                commented.get(p).remove(oldComment);
+                commented.get(p).add(newComment);
                 return true;
-            } else {
-                return false;
             }
-        } else {
-            return false;
+
         }
+        return false;
 
     }
-    
+
+    public boolean deleteComment(Post p, String comment) {
+        ArrayList<String> cmt;
+        if (commented.containsKey(p)) {
+            cmt = commented.get(p);
+            if (cmt.contains(comment)) {
+                p.deleteComment(this, comment);
+                commented.get(p).remove(comment);
+                return true;
+            }
+
+        }
+        return false;
+
+    }
+
     public void viewAllComment() {
         for (Map.Entry<Post, ArrayList<String>> entry : commented.entrySet()) {
             Post post = entry.getKey();
             ArrayList<String> comments = entry.getValue();
             for (String comment : comments) {
-                if (post.getUserPost().getUserID().equalsIgnoreCase(this.getUserID()))
+                if (post.getUserPost().getUserID().equalsIgnoreCase(this.getUserID())) {
                     System.out.println(post.getId() + ": " + comment);
+                }
             }
         }
-        
-        if (commented.isEmpty()) 
+
+        if (commented.isEmpty()) {
             System.out.println("User has no comment");
+        }
     }
     //============================================================
 
@@ -228,14 +265,14 @@ public class User {
         return String.format("%-5s%-20s%-15s%-20s\n", this.userID, this.name, this.address, this.dateOfBirth);
     }
 
-    public void displayAllCMT(Post s){
+    public void displayAllCMT(Post s) {
         ArrayList<String> listCMT = new ArrayList<>();
-        if(commented.containsKey(s)){
+        if (commented.containsKey(s)) {
             listCMT = commented.get(s);
             for (String string : listCMT) {
                 System.out.println(string);
             }
         }
     }
-    
+
 }

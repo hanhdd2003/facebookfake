@@ -66,7 +66,7 @@ public class Validate {
 
     public String instring(String a) {
         System.out.print(a);
-        return sc.nextLine();
+        return sc.nextLine().trim();
     }
 
     public String inType() {
@@ -130,6 +130,38 @@ public class Validate {
                 throw new Exception();
             } catch (Exception e) {
                 System.out.println("Ivalid ID");
+            }
+        }
+    }
+    
+    public String inIdUser() {
+        String s;
+        while (true) {
+            try {
+                System.out.print("Enter ID: ");
+                s = sc.nextLine();
+                if (s.matches("^(?i)US\\d+")) {
+                    return s.toUpperCase();
+                }
+                throw new Exception();
+            } catch (Exception e) {
+                System.out.println("Must input US...");
+            }
+        }
+    }
+    
+    public String inIdPost() {
+        String s;
+        while (true) {
+            try {
+                System.out.print("Enter ID: ");
+                s = sc.nextLine();
+                if (s.matches("^(?i)PO\\d+")) {
+                    return s.toUpperCase();
+                }
+                throw new Exception();
+            } catch (Exception e) {
+                System.out.println("Must input PO...");
             }
         }
     }

@@ -5,6 +5,7 @@
  */
 package object;
 
+import container.Manager;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -25,6 +26,15 @@ public class Post {
     private HashMap<User, ArrayList<String>> comments = new HashMap<>();
 
     public Post() {
+    }
+
+    public Post(String id, String type, Post p, String privacy, String date, User userPost) {
+        this.dayPost = date;
+        this.id = id;
+        this.type = type;
+        this.content = p.getFormattedPostString();
+        this.privacy = privacy;
+        this.userPost = userPost;
     }
 
     public Post(String id, String type, String content, String privacy, String date, User userPost) {
@@ -96,7 +106,7 @@ public class Post {
         }
         return count;
     }
-    
+
     public void share() {
         this.numberShare++;
     }
@@ -151,7 +161,7 @@ public class Post {
     }
 
     public void deleteComment(User user, String comment) {
-        if (this.comments.containsKey(user)) {
+        if (this.comments.containsKey(user) && this.comments.get(user).contains(comment)) {
             this.comments.get(user).remove(comment);
         }
     }
@@ -166,121 +176,69 @@ public class Post {
     }
 
     public void display() {
-        System.out.println("+------------------------------------------------------------+");
-        System.out.printf("| %5s%20s%20s\n", "", userPost, "|");
-        System.out.printf("| %-15s%-15s%-15s%-14s%-15s\n", "ID", "type", "privacy", "dayPost", "|");
-        System.out.printf("| %-15s%-15s%-15s%-14s%-15s\n", id, type, privacy, dayPost, "|");
-        System.out.printf("%-60s %-40s\n", "|", "|");
-        System.out.printf("%-1s%-60s%-20s\n", "|", content, "|");
-        System.out.printf("%-60s %-40s\n", "|", "|");
-        System.out.printf("%-5s%-20s%-20s%-16s%-10s\n", "|", "Emotion", "Comment", "Share", "|");
-        System.out.printf("%-5s%-20s%-20s%-16s%-10s\n", "|", this.getNumberEmotions(), this.getNumberComment(), numberShare, "|");
-        System.out.println("+------------------------------------------------------------+");
+        System.out.println("+---------------------------------------------------------------------+");
+        System.out.printf("| %5s%30s%34s\n", "", userPost.getName(), "|");
+        System.out.printf("| %-15s%-15s%-15s%-23s%-19s\n", "ID", "type", "privacy", "dayPost", "|");
+        System.out.printf("| %-15s%-15s%-15s%-23s%-15s\n", id, type, privacy, dayPost, "|");
+        System.out.printf("%-70s%-40s\n", "|", "|");
+        System.out.printf("%-1s%-69s%-20s\n", "|", content, "|");
+        System.out.printf("%-69s %-40s\n", "|", "|");
+        System.out.printf("%-15s%-20s%-20s%-15s%-10s\n", "|", "Emotion", "Comment", "Share", "|");
+        System.out.printf("%-15s%-20s%-20s%-15s%-10s\n", "|", this.getNumberEmotions(), this.getNumberComment(), numberShare, "|");
+        System.out.println("+---------------------------------------------------------------------+");
     }
-    
-    public void displayEmotionDetail(){
+
+    public void displayEmotionDetail() {
         System.out.println("List emotion");
         String emotion;
-        for(User u : emotions.keySet()){
+        for (User u : emotions.keySet()) {
             emotion = emotions.get(u);
-            System.out.println(u.getName() + ": "+ emotion);
+            System.out.println(u.getName() + ": " + emotion);
         }
     }
-    
-    public void displayCommentDetail(){
+
+    public void displayCommentDetail() {
         ArrayList<String> listCMT = new ArrayList<>();
         for (User user : comments.keySet()) {
             listCMT = comments.get(user);
-            System.out.println(user.getName()+": ");
+            System.out.println("---------------------------------");
+            System.out.println(user.getName() + ": ");
             for (String string : listCMT) {
                 System.out.println(string);
             }
+            System.out.println("---------------------------------");
+
             System.out.println();
         }
     }
-    
-    
-    
 
-    public void display1() {
-        System.out.println("+-----------------------------------------------------+");
-        System.out.printf("User ID: %-20s\n", userPost.getUserID());
-        System.out.printf("User name: %-20s\n", userPost.getName());
-        System.out.printf("ID: %-10s\n", this.id);
-        System.out.printf("%-15s%-15s%-15s\n", "Type", "Privacy", "Day post");
-        System.out.printf("%-15s%-15s%-15s\n", type, privacy, dayPost);
-        System.out.printf("\n");
-        System.out.printf("Content:\n");
-        displayContent();
-        System.out.printf("%-15s%-15s%-15s\n", "Total emotion", "Total comment", "Total share");
-        System.out.printf("%-15d%-15d%-15d\n", this.getNumberEmotions(), this.getNumberComment(), this.getNumberShare());
-        System.out.println("+-----------------------------------------------------+");
-        System.out.println("");
+
+    public static void main(String[] args) {
+        User u = new User("US1", "Hung", "Bac Ninh", "8/7/2003", "hung", "123");
+        User u1 = new User("US2", "hanh", "hp", "2/11/2003", "hanh", "123");
+        Post p = new Post("PO1", "Status", "Hung hut hit dang an com trong nha ve sinh", "Friend", "28/10/2023 10:13:52", u);
+
+        u.addPost(p);
+
+        Manager man = new Manager();
+
+        p.display();
     }
 
-    public void displayContent() {
-        String content = this.getContent();
-        int chieuRongCuaDong = 80;
+    public String getFormattedPostString() {
+        StringBuilder formattedPost = new StringBuilder();
+        formattedPost.append("+---------------------------------------------------------------------+\n");
+        formattedPost.append(String.format("| %5s%30s%34s\n", "", userPost.getName(), "|\n"));
+        formattedPost.append(String.format("| %-15s%-15s%-15s%-23s%-19s\n", "ID", "type", "privacy", "dayPost", "|\n"));
+        formattedPost.append(String.format("| %-15s%-15s%-15s%-23s%-15s\n", id, type, privacy, dayPost, "|\n"));
+        formattedPost.append(String.format("%-70s%-40s\n", "|", "|\n"));
+        formattedPost.append(String.format("%-1s%-69s%-20s\n", "|", content, "|\n"));
+        formattedPost.append(String.format("%-69s %-40s\n", "|", "|\n"));
+        formattedPost.append(String.format("%-15s%-20s%-20s%-15s%-10s\n", "|", "Emotion", "Comment", "Share", "|\n"));
+        formattedPost.append(String.format("%-15s%-20s%-20s%-15s%-10s\n", "|", this.getNumberEmotions(), this.getNumberComment(), numberShare, "|\n"));
+        formattedPost.append("+---------------------------------------------------------------------+");
 
-        String[] words = content.split(" ");
-        StringBuilder vanBanXuongDong = new StringBuilder();
-        StringBuilder dongHienTai = new StringBuilder();
-
-        for (String word : words) {
-            if (dongHienTai.length() + word.length() <= chieuRongCuaDong) {
-                dongHienTai.append(word).append(" ");
-            } else {
-                //thêm dòng mới hiện tại vào vanBanXuongDong
-                vanBanXuongDong.append(dongHienTai.toString().trim()).append("\n");
-
-                //reset dongHienTai
-                dongHienTai.setLength(0);
-                dongHienTai.append(word).append(" ");
-            }
-        }
-
-        //kiểm tra xem dòng hiện tại vẫn chứa từ
-        if (dongHienTai.length() > 0) {
-            vanBanXuongDong.append(dongHienTai.toString().trim());
-        }
-
-        System.out.println(vanBanXuongDong.toString());
-        System.out.println("");
+        return formattedPost.toString();
     }
 
-    public void displayListEmotion() {
-        if (!emotions.isEmpty()) {
-
-            HashMap<String, Integer> emotionCounts = new HashMap<>();
-
-            for (String emotion : emotions.values()) {
-                emotionCounts.put(emotion, emotionCounts.getOrDefault(emotion, 0) + 1);
-            }
-
-            emotionCounts.forEach((emotion, count) -> {
-                System.out.println(emotion + " " + count);
-            });
-
-            /*
-            C2:
-            emotions.entrySet().stream()
-                    .collect(Collectors.groupingBy(Entry::getValue, Collectors.counting()))
-                    .forEach((emotion, count) -> {
-                        System.out.println(emotion + " " + count);
-                    });
-             */
-        } else {
-            System.out.println("No emotion");
-        }
-    }
-
-    public void displayListEmotionDetail() {
-        if (!emotions.isEmpty()) {
-            emotions.forEach((user, emotion) -> {
-                System.out.println(user.getName() + " express " + emotion);
-            });
-        } else {
-            System.out.println("No emotion");
-        }
-    }
 }
