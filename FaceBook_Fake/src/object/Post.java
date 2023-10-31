@@ -227,16 +227,16 @@ public class Post {
 
     public String getFormattedPostString() {
         StringBuilder formattedPost = new StringBuilder();
-        formattedPost.append("+---------------------------------------------------------------------+\n");
-        formattedPost.append(String.format("| %5s%30s%34s\n", "", userPost.getName(), "|\n"));
-        formattedPost.append(String.format("| %-15s%-15s%-15s%-23s%-19s\n", "ID", "type", "privacy", "dayPost", "|\n"));
-        formattedPost.append(String.format("| %-15s%-15s%-15s%-23s%-15s\n", id, type, privacy, dayPost, "|\n"));
-        formattedPost.append(String.format("%-70s%-40s\n", "|", "|\n"));
-        formattedPost.append(String.format("%-1s%-69s%-20s\n", "|", content, "|\n"));
-        formattedPost.append(String.format("%-69s %-40s\n", "|", "|\n"));
-        formattedPost.append(String.format("%-15s%-20s%-20s%-15s%-10s\n", "|", "Emotion", "Comment", "Share", "|\n"));
-        formattedPost.append(String.format("%-15s%-20s%-20s%-15s%-10s\n", "|", this.getNumberEmotions(), this.getNumberComment(), numberShare, "|\n"));
-        formattedPost.append("+---------------------------------------------------------------------+");
+        formattedPost.append("+--------------------------------------------------------------------+\n");
+        formattedPost.append(String.format("| %5s%30s%34s\n", "", userPost.getName(), "|"));
+        formattedPost.append(String.format("| %-15s%-15s%-15s%-23s%-19s\n", "ID", "type", "privacy", "dayPost", "|"));
+        formattedPost.append(String.format("| %-15s%-15s%-15s%-23s%-15s\n", id, type, privacy, dayPost, "|"));
+        formattedPost.append(String.format("%-70s%-40s\n", "|", "|"));
+        formattedPost.append(String.format("%-1s%-69s%-20s\n", "|", content, "|"));
+        formattedPost.append(String.format("%-69s %-40s\n", "|", "|"));
+        formattedPost.append(String.format("%-15s%-20s%-20s%-15s%-10s\n", "|", "Emotion", "Comment", "Share", "|"));
+        formattedPost.append(String.format("%-15s%-20s%-20s%-15s%-10s\n", "|", this.getNumberEmotions(), this.getNumberComment(), numberShare, "|"));
+        formattedPost.append("+--------------------------------------------------------------------+");
 
         return formattedPost.toString();
     }

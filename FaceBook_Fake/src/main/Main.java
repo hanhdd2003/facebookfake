@@ -24,6 +24,7 @@ public class Main {
         man.initFriend();
         man.initPost();
         while (true) {
+            System.out.println("");
             choice = man.menuMain();
             switch (choice) {
                 case 1:
@@ -50,6 +51,7 @@ public class Main {
         boolean s = true;
         if (login != null) {
             while (s) {
+                System.out.println("");
                 choice = man.menuLoginComplete(login);
                 switch (choice) {
                     case 1:
@@ -88,6 +90,7 @@ public class Main {
         boolean a = true;
         if(login != null){
             while (a) {                
+                System.out.println("");
                 choice = man.menuPosts();
                 switch(choice){
                     case 1:
@@ -118,7 +121,8 @@ public class Main {
         int choice;
         boolean a = true;
         if(login != null){
-            while (a) {                
+            while (a) {           
+                System.out.println("");
                 choice = man.friend();
                 switch(choice){
                     case 1:
@@ -149,7 +153,8 @@ public class Main {
         int choice;
         boolean a = true;
         if(login != null){
-            while (a) {                
+            while (a) {           
+                System.out.println("");
                 choice = man.profile();
                 switch(choice){
                     case 1:
@@ -181,6 +186,7 @@ public class Main {
         boolean a = true;
         if(post != null){
             while (a) {                
+                System.out.println("");
                 choice = man.postDetail();
                 switch(choice){
                     case 1:
@@ -217,7 +223,7 @@ public class Main {
                         break;
                     case 9:
                         //Share
-                        
+                        menuShare();
                         break;
                     case 10:
                         a = false;
@@ -230,16 +236,17 @@ public class Main {
     public static void menuShare(){
         int choice;
         boolean a = true;
-        while (a) {            
+        while (a) {        
+            System.out.println("");
             choice = man.menuShare();
             switch(choice){
                 case 1:
                     //share friend
-                    
+                    man.sharePostWithAllFriends(login, post);
                     break;
                 case 2:
                     //share all
-                    
+                    man.sharePostWithAllUsers(login, post);
                     break;
                 case 3:
                     a = false;
