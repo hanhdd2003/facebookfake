@@ -143,6 +143,11 @@ public class Manager {
 
     public void signUp() {
         String username = val.instring("Enter username: ");
+        if (con.checkUsernameExist(username)) {
+            System.out.println("Username is exist");
+            return;
+        }
+            
         String password = val.instring("Enter password: ");
         String id = val.inIdUser();
         String name = val.inName();
@@ -253,71 +258,102 @@ public class Manager {
         }
     }
 
-    public void editPostByUser(User user) {
-        String postId = val.inID();
-        Post post = user.getPost(postId);
-        if (post != null) {
-            String newType = val.inType();
-            String newContent = val.instring("Enter new content: ");
-            String newDayPost = val.getDateNow();
-            String newPrivacy = val.inPrivacy();
-            user.editPost(post, newType, newContent, newPrivacy, newDayPost);
-            if (!postId.startsWith("S")) {
-                String postShareId = "S" + postId;
-                for (Vertex<User> vertex : con.getListUser().getVertices()) {
-                    User user1 = vertex.getLabel();
-                    Post postShare = user1.getPost(postShareId);
-                    if (postShare != null) {
-                        user1.editPost(postShare, newType, newContent, newPrivacy, newDayPost);
-                    }
-                }
+    public void editPostByUser(User user, Post post) {
+//        if (post != null) {
+//            String newType = val.inType();
+//            String newContent = val.instring("Enter new content: ");
+//            String newDayPost = val.getDateNow();
+//            String newPrivacy = val.inPrivacy();
+//            user.editPost(post, newType, newContent, newPrivacy, newDayPost);
+//            if (!postId.startsWith("S")) {
+//                String postShareId = "S" + postId;
+//                for (Vertex<User> vertex : con.getListUser().getVertices()) {
+//                    User user1 = vertex.getLabel();
+//                    Post postShare = user1.getPost(postShareId);
+//                    if (postShare != null) {
+//                        user1.editPost(postShare, newType, newContent, newPrivacy, newDayPost);
+//                    }
+//                }
+//            }
+//            System.out.println("Edit post successfull");
+//        } else {
+//            System.out.println("Edit post fail");
+//        }
+        
+        int choice;
+        boolean a = true;
+        String newType = null;
+        String newContent = null;
+        String newPrivacy = null;
+        while (a) {
+            System.out.println("");
+            System.out.println("1. Edit type");
+            System.out.println("2. Edit content");
+            System.out.println("3. Edit privacy");
+            System.out.println("4. Quit");
+            choice = val.inputChoice(1, 4);
+            switch (choice) {
+                case 1:
+                    newType = val.inType();
+                    break;
+                case 2:
+                    newContent = val.instring("Enter new content: ");
+                    break;
+                case 3:
+                    newPrivacy = val.inPrivacy();
+                    break;
+                case 4:
+                    a = false;
+                    break;
             }
-            System.out.println("Edit post successfull");
-        } else {
-            System.out.println("Edit post fail");
+        }
+        if (newType != null) {
+            post.setType(newType);
+            System.out.println("Edit type successfull");
+        }
+        if (newContent != null) {
+            post.setContent(newContent);
+            System.out.println("Edit content successfull");
+        }
+        if (newPrivacy != null) {
+            post.setPrivacy(newPrivacy);
+            System.out.println("Edit privacy successfull");
         }
     }
 
-    public Post getPost(User user) {
+    public Post getPostOfUser(User user) {
+        ArrayList<Post> ls = user.getPosts();
+        if (!ls.isEmpty()) {
+            for (Post post : ls) {
+                post.display();
+            }
+            
+            String postId = val.inIdPost();
+            for (Post post : ls) {
+                if (post.getId().equalsIgnoreCase(postId)) {
+                    return post;
+                }
+            }
+        }
+        System.out.println("Post is not exist");
+        return null;
+    }
+    
+    public Post getPostCanView(User user) {
         ArrayList<Post> ls = this.getPostDisplayForUser(user);
         if (!ls.isEmpty()) {
             for (Post p : ls) {
                 p.display();
             }
-            String idP = val.instring("Enter id of Post: ");
+            String idP = val.inIdPost();
             for (Post p : ls) {
                 if (p.getId().equalsIgnoreCase(idP)) {
                     return p;
                 }
             }
         }
+        System.out.println("Post is not exist");
         return null;
-    }
-
-    public void displayPostOfUser(User user) {
-        for (Post post : user.getPosts()) {
-            post.display();
-        }
-    }
-
-    public void displayNotification(User user) {
-        for (String no : user.getNotification()) {
-            System.out.println(no);
-        }
-    }
-
-    public void deletePostByUser(User user) {
-        if (user != null) {
-            String postId = val.inID();
-            if (user.deletePost(postId)) {
-                con.deletePostShare(postId);
-                System.out.println("Delete Post successful");
-            } else {
-                System.out.println("Delete Post fail");
-            }
-        } else {
-            System.out.println("Delete Post fail");
-        }
     }
 
     public ArrayList<Post> getPostDisplayForUser(User user) {
@@ -352,6 +388,34 @@ public class Manager {
         return result;
 
     }
+    
+    public void displayPostOfUser(User user) {
+        for (Post post : user.getPosts()) {
+            post.display();
+        }
+    }
+
+    public void displayNotification(User user) {
+        for (String no : user.getNotification()) {
+            System.out.println(no);
+        }
+    }
+
+    public void deletePostByUser(User user) {
+        if (user != null) {
+            String postId = val.inID();
+            if (user.deletePost(postId)) {
+                con.deletePostShare(postId);
+                System.out.println("Delete Post successful");
+            } else {
+                System.out.println("Delete Post fail");
+            }
+        } else {
+            System.out.println("Delete Post fail");
+        }
+    }
+
+    
 
     // friend===================================================
     public void addFriendByUser(User user) {
@@ -600,6 +664,7 @@ public class Manager {
         String newAddress = null;
         String newDate = null;
         while (a) {
+            System.out.println("");
             System.out.println("1. Edit name");
             System.out.println("2. Edit Address");
             System.out.println("3. Edit Date Of Birth");
@@ -629,7 +694,6 @@ public class Manager {
         if (newDate != null) {
             u.setDateOfBirth(newDate);
         }
-
     }
 
     public void share(User u, Post p) {

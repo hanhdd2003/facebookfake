@@ -55,6 +55,7 @@ public class Main {
                 choice = man.menuLoginComplete(login);
                 switch (choice) {
                     case 1:
+                        //Post
                         menuPost();
                         break;
                     case 2:
@@ -62,7 +63,7 @@ public class Main {
                         break;
                     case 3:
                         // xem và tương tác 
-                        post = man.getPost(login);
+                        post = man.getPostCanView(login);
                         postDetail();
                         break;
                     case 4:
@@ -99,7 +100,8 @@ public class Main {
                         break;
                     case 2:
                         // edit post
-                        man.editPostByUser(login);
+                        post = man.getPostOfUser(login);
+                        man.editPostByUser(login, post);
                         break;
                     case 3:
                         //delete post
@@ -171,7 +173,8 @@ public class Main {
                         break;
                     case 4:
                         //edit posted
-                        man.editPostByUser(login);
+                        post = man.getPostOfUser(login);
+                        man.editPostByUser(login, post);
                         break;
                     case 5:
                         a = false;

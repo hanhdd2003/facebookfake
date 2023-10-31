@@ -53,7 +53,7 @@ public class Controller {
 
     public boolean addUser(String id, String name, String address, String dateOfBirth, String username, String password) {
         User newUser = new User(id, name, address, dateOfBirth,username, password);
-        if (this.checkIdUser(id) && this.checkUsernameExist(username)) {
+        if (this.checkIdUser(id) || this.checkUsernameExist(username)) {
             return false;
         }
         listUser.addV(newUser);
