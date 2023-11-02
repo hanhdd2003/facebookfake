@@ -23,6 +23,7 @@ public class Manager {
 
     private final Validate val = new Validate();
     private final Controller con = new Controller();
+    private int countShare = 0;
 
     //khởi tạo ===============================================
     public void initUser() {
@@ -89,8 +90,9 @@ public class Manager {
             System.out.println("Post not found.");
             return;
         }
-        Post newPost = new Post("S" + postShare.getId(),postShare.getType() , postShare, "Friend", val.getDateNow(), user);
+        countShare++;
         postShare.share();
+        Post newPost = new Post("S" + countShare + postShare.getId(),postShare.getType() , postShare, "Friend", val.getDateNow(), user);
         user.addPost(newPost);
         System.out.println("Share successful");
         user.addNotification("you shared post "+postShare.getId()+" ("+val.getDateNow()+")");
@@ -102,8 +104,9 @@ public class Manager {
             System.out.println("Post not found.");
             return;
         }
-        Post newPost = new Post("S" + postShare.getId(),postShare.getType() , postShare, "Public", val.getDateNow(), user);
+        countShare++;
         postShare.share();
+        Post newPost = new Post("S" + countShare + postShare.getId(),postShare.getType() , postShare, "Public", val.getDateNow(), user);
         user.addPost(newPost);
         System.out.println("Share successful");
         user.addNotification("you shared post "+postShare.getId()+" ("+val.getDateNow()+")");
