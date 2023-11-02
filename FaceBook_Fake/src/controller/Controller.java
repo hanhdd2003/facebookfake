@@ -151,4 +151,8 @@ public class Controller {
         return result;
     }
     
+    public Set<User> getListUser1(User user) {
+        return listUser.BFS1(user);
+    }
+    
 }
