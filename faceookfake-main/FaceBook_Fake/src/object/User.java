@@ -22,7 +22,7 @@ public class User {
     private String address;
     private String dateOfBirth;
     private final ArrayList<Post> posts = new ArrayList<>();
-    private final HashMap<Post, ArrayList<String>> commented = new HashMap<>();
+    private final HashMap<Post, ArrayList<Comment>> commented = new HashMap<>();
     private final HashMap<Post, String> emotion = new HashMap<>();
     private final HashMap<Post, Integer> amountShared = new HashMap<>();
     private ArrayList<String> notification = new ArrayList<>();
@@ -30,8 +30,7 @@ public class User {
     public User() {
     }
 
-    public User(String id, String name, String address, String dateOfBirth, String username, String password) {
-        this.userID = id;
+    public User(String name, String address, String dateOfBirth, String username, String password) {
         this.name = name;
         this.address = address;
         this.dateOfBirth = dateOfBirth;
@@ -69,7 +68,7 @@ public class User {
         return null;
     }
 
-    public HashMap<Post, ArrayList<String>> getCommented() {
+    public HashMap<Post, ArrayList<Comment>> getCommented() {
         return commented;
     }
 
@@ -182,38 +181,37 @@ public class User {
 //============================================================
 
     public void addComment(Post p, String comment) {
-        p.addComment(this, comment);
+        Comment c = new Comment(this, comment);
+        p.addComment(this, c);
         if (commented.containsKey(p)) {
-            commented.get(p).add(comment);
+            commented.get(p).add(c);
         } else {
-            ArrayList<String> list = new ArrayList<>();
-            list.add(comment);
+            ArrayList<Comment> list = new ArrayList<>();
+            list.add(c);
             commented.put(p, list);
         }
     }
 
-    public boolean editComment(Post p, String oldComment, String newComment) {
-        ArrayList<String> cmt;
+    public boolean editComment(Post p, Comment oldComment, String newComment) {
+        ArrayList<Comment> cmt;
         if (commented.containsKey(p)) {
             cmt = commented.get(p);
-            if (cmt.contains(oldComment)) {
-                p.setComment(this, oldComment, newComment);
-                commented.get(p).remove(oldComment);
-                commented.get(p).add(newComment);
-                return true;
-            }
-
+            int index = p.getComments().indexOf(oldComment);
+            p.setComment(index, newComment);
+            commented.get(p).get(commented.get(p).indexOf(oldComment)).setContent(newComment);
+            commented.get(p).get(commented.get(p).indexOf(oldComment)).setEdited();
+            return true;
         }
         return false;
 
     }
 
-    public boolean deleteComment(Post p, String comment) {
-        ArrayList<String> cmt;
+    public boolean deleteComment(Post p, Comment comment) {
+        ArrayList<Comment> cmt;
         if (commented.containsKey(p)) {
             cmt = commented.get(p);
             if (cmt.contains(comment)) {
-                p.deleteComment(this, comment);
+                p.deleteComment(comment);
                 commented.get(p).remove(comment);
                 return true;
             }
@@ -224,12 +222,12 @@ public class User {
     }
 
     public void viewAllComment() {
-        for (Map.Entry<Post, ArrayList<String>> entry : commented.entrySet()) {
+        for (Map.Entry<Post, ArrayList<Comment>> entry : commented.entrySet()) {
             Post post = entry.getKey();
-            ArrayList<String> comments = entry.getValue();
-            for (String comment : comments) {
+            ArrayList<Comment> comments = entry.getValue();
+            for (Comment comment : comments) {
                 if (post.getUserPost().getUserID().equalsIgnoreCase(this.getUserID())) {
-                    System.out.println(post.getId() + ": " + comment);
+                    System.out.println(post.getId() + ": " + comment.getContent());
                 }
             }
         }
@@ -266,11 +264,11 @@ public class User {
     }
 
     public void displayAllCMT(Post s) {
-        ArrayList<String> listCMT = new ArrayList<>();
+        ArrayList<Comment> listCMT = new ArrayList<>();
         if (commented.containsKey(s)) {
             listCMT = commented.get(s);
-            for (String string : listCMT) {
-                System.out.println(string);
+            for (Comment string : listCMT) {
+                System.out.println(string.getContent());
             }
         }
     }

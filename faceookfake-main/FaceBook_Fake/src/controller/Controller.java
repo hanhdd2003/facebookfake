@@ -18,7 +18,9 @@ import object.User;
 public class Controller {
 
     private MyGraph<User> listUser = new MyGraph<>();
+    private long userIdCounter = 1;
 
+    
     public MyGraph<User> getListUser() {
         return this.listUser;
     }
@@ -51,20 +53,15 @@ public class Controller {
         return friendList;
     }
 
-    public boolean addUser(String id, String name, String address, String dateOfBirth, String username, String password) {
-        User newUser = new User(id, name, address, dateOfBirth,username, password);
-        if (this.checkIdUser(id) || this.checkUsernameExist(username)) {
-            return false;
-        }
-        listUser.addV(newUser);
-        return true;
+    public boolean addUser(String name, String address, String dateOfBirth, String username, String password) {
+        User newUser = new User(name, address, dateOfBirth,username, password);
+        return this.addUser(newUser);
     }
 
     public boolean addUser(User newUser) {
-        if (this.checkIdUser(newUser.getUserID()) || this.checkUsernameExist(newUser.getUsername())) {
-            return false;
-        }
+        newUser.setUserID("US" + this.userIdCounter);
         listUser.addV(newUser);
+        this.userIdCounter++;
         return true;
     }
 
@@ -149,10 +146,6 @@ public class Controller {
             }
         }
         return result;
-    }
-    
-    public Set<User> getListUser1(User user) {
-        return listUser.BFS1(user);
     }
     
 }

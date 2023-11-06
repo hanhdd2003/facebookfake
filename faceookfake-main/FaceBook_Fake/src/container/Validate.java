@@ -5,7 +5,9 @@
  */
 package container;
 
+import java.sql.Time;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
@@ -73,7 +75,7 @@ public class Validate {
         String s;
         while (true) {
             try {
-                System.out.print("Enter type of Post: ");
+                System.out.print("Enter type of Post (status, story, reels): ");
                 s = sc.nextLine();
                 if (s.equalsIgnoreCase("status") || s.equalsIgnoreCase("story") || s.equalsIgnoreCase("reels")) {
                     return s;
@@ -89,7 +91,7 @@ public class Validate {
         String s;
         while (true) {
             try {
-                System.out.print("Enter Privacy: ");
+                System.out.print("Enter Privacy (friend, public, private): ");
                 s = sc.nextLine();
                 if (s.equalsIgnoreCase("friend") || s.equalsIgnoreCase("public") || s.equalsIgnoreCase("private")) {
                     return s;
@@ -105,15 +107,25 @@ public class Validate {
         String s;
         while (true) {
             try {
-                System.out.print("Enter Emotion: ");
+                System.out.print("Enter Emotion (like, love, wow, haha, angry, sad): ");
                 s = sc.nextLine();
-                if (s.equalsIgnoreCase("Like") || s.equalsIgnoreCase("Love") || s.equalsIgnoreCase("WOW")
-                        || s.equalsIgnoreCase("haha") || s.equalsIgnoreCase("Angry") || s.equalsIgnoreCase("sad")) {
-                    return s;
+                switch (s.toLowerCase()) {
+                    case "like":
+                        return "👍";
+                    case "love":
+                        return "❤";
+                    case "wow":
+                        return "😮";
+                    case "haha":
+                        return "😄";
+                    case "angry":
+                        return "😡";
+                    case "sad":
+                        return "😢";
                 }
                 throw new Exception();
             } catch (Exception e) {
-                System.out.println("Must input Like, Love, haha, Angry, WOW, sad");
+                System.out.println("Must input like, love, haha, angry, wow, sad");
             }
         }
     }
@@ -133,7 +145,7 @@ public class Validate {
             }
         }
     }
-    
+
     public String inIdUser() {
         String s;
         while (true) {
@@ -149,7 +161,7 @@ public class Validate {
             }
         }
     }
-    
+
     public String inIdPost() {
         String s;
         while (true) {

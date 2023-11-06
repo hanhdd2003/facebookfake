@@ -5,7 +5,6 @@
  */
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -34,25 +33,23 @@ public class MyGraph<T> {
     }
 
     public Vertex<T> getFirstVertexByIterator() {
-        if (vertices.isEmpty()) {
+        if (vertices.isEmpty())
             return null;
-        }
-
+        
         Iterator<Vertex<T>> iterator = vertices.iterator();
         return iterator.next();
     }
-
+    
     public Vertex<T> getFirstVertex() {
-        if (vertices.isEmpty()) {
+        if (vertices.isEmpty())
             return null;
-        }
-
+        
         for (Vertex<T> vertex : vertices) {
             return vertex;
         }
         return null;
     }
-
+    
     public Set<Vertex<T>> getVertices() {
         return vertices;
     }
@@ -76,38 +73,37 @@ public class MyGraph<T> {
     public void removeV(T label) {
         Vertex<T> vertexToRemove = getVertex(label);
         if (vertexToRemove != null) {
-
+            
             // xóa vertex trong vertices
             vertices.remove(vertexToRemove);
-
+            
             //xóa tất cả cạnh liên kết với vertex
             for (Vertex<T> vertice : vertices) {
                 vertice.getAdjList().remove(vertexToRemove);
             }
         }
     }
-
+    
     public void removeE(T u, T v) {
         Vertex<T> vertexU = getVertex(u);
         Vertex<T> vertexV = getVertex(v);
-
+        
         if (vertexU != null && vertexV != null) {
             vertexU.getAdjList().remove(vertexV);
             vertexV.getAdjList().remove(vertexU);
         }
     }
-
+    
     public boolean containEdge(T u, T v) {
         Vertex<T> vertexU = getVertex(u);
         Vertex<T> vertexV = getVertex(v);
-
-        if (vertexU == null || vertexV == null) {
+        
+        if (vertexU == null || vertexV == null)
             return false;
-        }
-
+        
         return vertexU.getAdjList().contains(vertexV);
     }
-
+    
     public void BFS(T start) {
         Set<Vertex<T>> visited = new HashSet<>();
         MyQueue<Vertex<T>> queue = new MyQueue<>();
@@ -126,30 +122,6 @@ public class MyGraph<T> {
         } else {
             System.out.println("Start vertex not found");
         }
-    }
-    
-    public Set<T> BFS1(T start) {
-        Set<Vertex<T>> visited = new HashSet<>();
-        Set<T> list = new HashSet<>();
-        MyQueue<Vertex<T>> queue = new MyQueue<>();
-        Vertex<T> startVertex = getVertex(start);
-        if (startVertex != null) {
-            queue.enqueue((Vertex<Vertex<T>>) startVertex);
-            while (!queue.isEmpty()) {
-                Vertex<T> pop = (Vertex<T>) queue.dequeue().data;
-
-                if (!visited.contains(pop)) {
-                    pop.getAdjList().stream().forEach(vertex -> queue.enqueue((Vertex<Vertex<T>>) vertex));
-                }
-                visited.add(pop);
-            }
-            visited.stream().forEach(t -> {
-                list.add(t.label);
-            });
-        } else {
-            System.out.println("Start vertex not found");
-        }
-        return list;
     }
 
     public void BFSTraversal() {
@@ -171,8 +143,8 @@ public class MyGraph<T> {
             System.out.println("Start vertex not found");
         }
     }
-
-    public void BFSTraversal(T start) {
+    
+        public void BFSTraversal(T start) {
         Set<Vertex<T>> visited = new HashSet<>();
         Queue<Vertex<T>> queue = new LinkedList<>();
         Vertex<T> startVertex = getVertex(start);
