@@ -1,26 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import object.Post;
 import object.User;
 
-/**
- *
- * @author Hanh
- */
+
 public class Controller {
 
-    private MyGraph<User> listUser = new MyGraph<>();
+    private final MyGraph<User> listUser = new MyGraph<>();
     private long userIdCounter = 1;
 
-    
     public MyGraph<User> getListUser() {
         return this.listUser;
     }
@@ -35,7 +26,7 @@ public class Controller {
         return null;
     }
 
-    public User getUserByAccount(String username, String password){
+    public User getUserByAccount(String username, String password) {
         for (Vertex<User> vertice : listUser.getVertices()) {
             User user = vertice.getLabel();
             if (user.getUsername().equals(username) && user.getPassword().equals(password)) {
@@ -44,7 +35,7 @@ public class Controller {
         }
         return null;
     }
-    
+
     public Set<User> getFriends(User user) {
         Set<User> friendList = new HashSet<>();
         for (Vertex<User> friendVertex : listUser.findNeighbors(user)) {
@@ -54,7 +45,7 @@ public class Controller {
     }
 
     public boolean addUser(String name, String address, String dateOfBirth, String username, String password) {
-        User newUser = new User(name, address, dateOfBirth,username, password);
+        User newUser = new User(name, address, dateOfBirth, username, password);
         return this.addUser(newUser);
     }
 
@@ -65,7 +56,6 @@ public class Controller {
         return true;
     }
 
-    
     public boolean addFriend(User user1, User user2) {
         if (user1 != null && user2 != null && !user1.getUserID().equalsIgnoreCase(user2.getUserID())) {
             listUser.addE(user1, user2);
@@ -73,7 +63,7 @@ public class Controller {
         }
         return false;
     }
-    
+
     public boolean addFriendById(String u1, String u2) {
         User user1 = this.getUserById(u1);
         User user2 = this.getUserById(u2);
@@ -93,7 +83,7 @@ public class Controller {
     }
 
     public boolean deleteFriend(User user1, User user2) {
-        if(checkFriend(user1, user2) && user1 != null && user2 != null){
+        if (checkFriend(user1, user2) && user1 != null && user2 != null) {
             listUser.removeE(user1, user2);
             return true;
         }
@@ -109,7 +99,7 @@ public class Controller {
             }
         }
     }
-    
+
     public boolean checkIdUser(String id) {
         for (Vertex<User> vertice : getListUser().vertices) {
             if (vertice.getLabel().getUserID().equalsIgnoreCase(id)) {
@@ -119,7 +109,7 @@ public class Controller {
         return false;
     }
 
-    public boolean checkUsernameExist(String userName){
+    public boolean checkUsernameExist(String userName) {
         for (Vertex<User> vertice : getListUser().vertices) {
             if (vertice.getLabel().getUsername().equals(userName)) {
                 return true;
@@ -127,25 +117,25 @@ public class Controller {
         }
         return false;
     }
-   
-    public boolean checkFriend(User u1, User u2){
-        if(listUser.containEdge(u1, u2)){
+
+    public boolean checkFriend(User u1, User u2) {
+        if (listUser.containEdge(u1, u2)) {
             return true;
         }
         return false;
     }
-    
-    public Set<User> search(String content){
+
+    public Set<User> search(String content) {
         Set<User> result = new HashSet<>();
         for (Vertex<User> vertex : listUser.getVertices()) {
             User user = vertex.getLabel();
-            if(user.getUserID().toLowerCase().contains(content.trim().toLowerCase())
+            if (user.getUserID().toLowerCase().contains(content.trim().toLowerCase())
                     || user.getName().toLowerCase().contains(content.trim().toLowerCase())
-                    || user.getAddress().toLowerCase().contains(content.trim().toLowerCase())){
+                    || user.getAddress().toLowerCase().contains(content.trim().toLowerCase())) {
                 result.add(user);
             }
         }
         return result;
     }
-    
+
 }

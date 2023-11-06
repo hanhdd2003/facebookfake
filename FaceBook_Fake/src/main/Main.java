@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package main;
 
 import container.Manager;
 import object.Post;
 import object.User;
 
-/**
- *
- * @author Hanh
- */
+
 public class Main {
 
     private static final Manager man = new Manager();

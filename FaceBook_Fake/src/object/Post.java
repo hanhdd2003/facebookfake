@@ -3,10 +3,7 @@ package object;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-/**
- *
- * @author Hanh
- */
+
 public class Post {
 
     private User userPost;

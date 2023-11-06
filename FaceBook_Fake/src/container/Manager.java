@@ -1,25 +1,16 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package container;
 
 import controller.Controller;
 import controller.Vertex;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Set;
 import object.Comment;
 import object.Post;
 import object.User;
 
-/**
- *
- * @author Hanh
- */
+
 public class Manager {
 
     private final Validate val = new Validate();
@@ -47,9 +38,9 @@ public class Manager {
     public void initPost() {
         User user1 = con.getUserById("US1");
         User user2 = con.getUserById("US2");
-        Post p1 = new Post("PO" + this.postIdCounter, "Status", "Hung hut hit dang an com trong nha ve sinh", "Friend", "28/10/2023  10:13:52",user1);
+        Post p1 = new Post("PO" + this.postIdCounter, "Status", "Hung hut hit dang an com trong nha ve sinh", "Friend", "28/10/2023  10:13:52", user1);
         this.postIdCounter++;
-        Post p2 = new Post("PO" + this.postIdCounter, "Status", "Hung hut", "Public", "28/10/2023 10:13:52",user1);
+        Post p2 = new Post("PO" + this.postIdCounter, "Status", "Hung hut", "Public", "28/10/2023 10:13:52", user1);
         this.postIdCounter++;
         user1.addPost(p1);
         user1.addPost(p2);
@@ -64,17 +55,17 @@ public class Manager {
 
     }
 
-    public void init(){
+    public void init() {
         User user1 = new User("Hung", "Bac Ninh", "8/7/2003", "hung", "123");
         User user2 = new User("Hanh", "Hai Phong", "3/3/2003", "hanh", "123");
         User user3 = new User("Thuy", "Vinh Phuc", "2/8/2003", "thuy", "123");
         User user4 = new User("Chung", "Tau", "1/11/2003", "chung", "123");
         User user5 = new User("Thang", "Lao Cai", "1/11/2003", "thang", "123");
-        Post p1 = new Post("PO" + this.postIdCounter, "Status", "Đây là bài viết của Hùng", "Friend", "28/10/2023  10:13:52",user1);
+        Post p1 = new Post("PO" + this.postIdCounter, "Status", "Đây là bài viết của Hùng", "Friend", "28/10/2023  10:13:52", user1);
         this.postIdCounter++;
-        Post p2 = new Post("PO" + this.postIdCounter, "Status", "Đây là bài viết của Hanh", "Public", "29/10/2023 12:13:52",user2);
+        Post p2 = new Post("PO" + this.postIdCounter, "Status", "Đây là bài viết của Hanh", "Public", "29/10/2023 12:13:52", user2);
         this.postIdCounter++;
-        Post p3 = new Post("PO" + this.postIdCounter, "Story", "Đây là bài viết của Thủy", "private", "30/10/2023 10:15:52",user3);
+        Post p3 = new Post("PO" + this.postIdCounter, "Story", "Đây là bài viết của Thủy", "private", "30/10/2023 10:15:52", user3);
         this.postIdCounter++;
         user1.addPost(p1);
         user2.addPost(p2);
@@ -91,7 +82,6 @@ public class Manager {
         con.addFriend(user3, user4);
     }
 
-
     public void sharePostWithAllFriends(User user, Post postShare) {
         if (postShare == null) {
             System.out.println("Post not found.");
@@ -99,11 +89,11 @@ public class Manager {
         }
         countShare++;
         postShare.share();
-        Post newPost = new Post("S" + countShare + postShare.getId(),postShare.getType() , postShare, "Friend", val.getDateNow(), user);
+        Post newPost = new Post("S" + countShare + postShare.getId(), postShare.getType(), postShare, "Friend", val.getDateNow(), user);
         user.addPost(newPost);
         System.out.println("Share successful");
-        user.addNotification("you shared post "+postShare.getId()+" ("+val.getDateNow()+")");
-        
+        user.addNotification("you shared post " + postShare.getId() + " (" + val.getDateNow() + ")");
+
     }
 
     public void sharePostWithAllUsers(User user, Post postShare) {
@@ -113,10 +103,10 @@ public class Manager {
         }
         countShare++;
         postShare.share();
-        Post newPost = new Post("S" + countShare + postShare.getId(),postShare.getType() , postShare, "Public", val.getDateNow(), user);
+        Post newPost = new Post("S" + countShare + postShare.getId(), postShare.getType(), postShare, "Public", val.getDateNow(), user);
         user.addPost(newPost);
         System.out.println("Share successful");
-        user.addNotification("you shared post "+postShare.getId()+" ("+val.getDateNow()+")");
+        user.addNotification("you shared post " + postShare.getId() + " (" + val.getDateNow() + ")");
     }
 
     public void displayCommentOfPost(String postId) {
@@ -149,9 +139,9 @@ public class Manager {
     // menu ====================================================================================
     public int menuMain() {
         System.out.println("+====== Welcome to facebook =====+");
-        System.out.printf("|%-10s%-21s |\n","","1. login");
-        System.out.printf("|%-10s%-21s |\n","","2. sign up");
-        System.out.printf("|%-10s%-21s |\n","","3. exit");
+        System.out.printf("|%-10s%-21s |\n", "", "1. login");
+        System.out.printf("|%-10s%-21s |\n", "", "2. sign up");
+        System.out.printf("|%-10s%-21s |\n", "", "3. exit");
         System.out.println("+================================+");
         return val.inputChoice(1, 3);
     }
@@ -168,7 +158,7 @@ public class Manager {
             System.out.println("Username is exist");
             return;
         }
-            
+
         String password = val.instring("Enter password: ");
         String name = val.inName();
         String address = val.instring("Enter address: ");
@@ -182,53 +172,53 @@ public class Manager {
 
     public int menuLoginComplete(User u) {
         System.out.printf("+===== Welcome to Fake Facebook======+\n");
-        System.out.printf("|    %-13s %-15s   |\n","1. Post","5. Delete User");  
-        System.out.printf("|    %-13s %-15s   |\n","2. Friend","6. Notification"); 
-        System.out.printf("|    %-13s %-15s   |\n","3. View Post","7. Exit"); 
-        System.out.printf("|    %-13s %-15s   |\n","4. Profile","");
+        System.out.printf("|    %-13s %-15s   |\n", "1. Post", "5. Delete User");
+        System.out.printf("|    %-13s %-15s   |\n", "2. Friend", "6. Notification");
+        System.out.printf("|    %-13s %-15s   |\n", "3. View Post", "7. Exit");
+        System.out.printf("|    %-13s %-15s   |\n", "4. Profile", "");
         System.out.printf("+====================================+\n");
         return val.inputChoice(1, 7);
     }
 
     public int menuPosts() {
         System.out.println("+------------------------------------+");
-        System.out.printf("|  %-15s  %-10s  |\n","1. Create post","4. Display post");
-        System.out.printf("|  %-15s  %-10s       |\n","2. Edit post","5. Exit");
-        System.out.printf("|  %-15s  %-10s       |\n","3. Delete post","");
+        System.out.printf("|  %-15s  %-10s  |\n", "1. Create post", "4. Display post");
+        System.out.printf("|  %-15s  %-10s       |\n", "2. Edit post", "5. Exit");
+        System.out.printf("|  %-15s  %-10s       |\n", "3. Delete post", "");
         System.out.println("+------------------------------------+");
         return val.inputChoice(1, 5);
     }
 
     public int friend() {
         System.out.println("+-------------------------------+");
-        System.out.printf("|  %-15s   %-10s |\n","1. Add friend","4. Search");
-        System.out.printf("|  %-15s  %-10s |\n","2. Delete Friend","5. Exit");
-        System.out.printf("|  %-15s  %-10s|\n","3. Display friend", "");
+        System.out.printf("|  %-15s   %-10s |\n", "1. Add friend", "4. Search");
+        System.out.printf("|  %-15s  %-10s |\n", "2. Delete Friend", "5. Exit");
+        System.out.printf("|  %-15s  %-10s|\n", "3. Display friend", "");
         System.out.println("+-------------------------------+");
         return val.inputChoice(1, 5);
     }
 
     public int profile() {
         System.out.println("+--------------------------------------+");
-        System.out.printf("|  %-15s  %-10s  |\n","1. View Infomation","4. Edit Posted");
-        System.out.printf("|  %-15s  %-10s      |\n","2. Edit Infomation","5. Exit");
-        System.out.printf("|  %-15s  %-10s         |\n","3. View Posted", "");
+        System.out.printf("|  %-15s  %-10s  |\n", "1. View Infomation", "4. Edit Posted");
+        System.out.printf("|  %-15s  %-10s      |\n", "2. Edit Infomation", "5. Exit");
+        System.out.printf("|  %-15s  %-10s         |\n", "3. View Posted", "");
         System.out.println("+--------------------------------------+");
         return val.inputChoice(1, 5);
     }
 
     public int postDetail() {
         System.out.println("+-------------------------------------------------+");
-        System.out.printf("| %-26s%-21s |\n","1. View Post","6. Add Comment");
-        System.out.printf("| %-26s%-21s |\n","2. View Emotion Of Post", "7. Edit Comment");
-        System.out.printf("| %-26s%-21s |\n","3. View Comment Of Post", "8. Delete Comment");
-        System.out.printf("| %-26s%-21s |\n","4. Add Emotion", "9. Share");
-        System.out.printf("| %-26s%-21s |\n","5. Delete Emotion","10. Exit");
+        System.out.printf("| %-26s%-21s |\n", "1. View Post", "6. Add Comment");
+        System.out.printf("| %-26s%-21s |\n", "2. View Emotion Of Post", "7. Edit Comment");
+        System.out.printf("| %-26s%-21s |\n", "3. View Comment Of Post", "8. Delete Comment");
+        System.out.printf("| %-26s%-21s |\n", "4. Add Emotion", "9. Share");
+        System.out.printf("| %-26s%-21s |\n", "5. Delete Emotion", "10. Exit");
         System.out.println("+-------------------------------------------------+");
         return val.inputChoice(1, 10);
     }
-    
-    public int menuShare(){
+
+    public int menuShare() {
         System.out.println("+-------------------------+");
         System.out.println("| 1. Share With Friend    |");
         System.out.println("| 2. Share With all User  |");
@@ -261,15 +251,15 @@ public class Manager {
 
         if (user.addPost(postID, postType, postContent, postPrivacy, postDate)) {
             System.out.println("Add post successful");
-            user.addNotification("Add post have id "+postID +" Successful "+" ("+val.getDateNow()+")");
+            user.addNotification("Add post have id " + postID + " Successful " + " (" + val.getDateNow() + ")");
         } else {
             System.out.println("Add post fail");
-            user.addNotification("Add post have id "+postID +" fail "+" ("+val.getDateNow()+")");
+            user.addNotification("Add post have id " + postID + " fail " + " (" + val.getDateNow() + ")");
         }
     }
 
     public void editPostByUser(User user, Post post) {
-        if(!user.getPosts().contains(post)){
+        if (!user.getPosts().contains(post)) {
             return;
         }
         int choice;
@@ -320,7 +310,7 @@ public class Manager {
             for (Post post : ls) {
                 post.display();
             }
-            
+
             String postId = val.inIdPost();
             for (Post post : ls) {
                 if (post.getId().equalsIgnoreCase(postId)) {
@@ -331,7 +321,7 @@ public class Manager {
         System.out.println("Post is not exist");
         return null;
     }
-    
+
     public Post getPostCanView(User user) {
         ArrayList<Post> ls = this.getPostDisplayForUser(user);
         if (!ls.isEmpty()) {
@@ -382,7 +372,7 @@ public class Manager {
         return result;
 
     }
-    
+
     public void displayPostOfUser(User user) {
         for (Post post : user.getPosts()) {
             post.display();
@@ -390,11 +380,11 @@ public class Manager {
     }
 
     public void displayNotification(User user) {
-        if(!user.getNotification().isEmpty()){
-        for (String no : user.getNotification()) {
-            System.out.println(no);
-        }
-        }else{
+        if (!user.getNotification().isEmpty()) {
+            for (String no : user.getNotification()) {
+                System.out.println(no);
+            }
+        } else {
             System.out.println("Have no notification");
         }
     }
@@ -405,17 +395,15 @@ public class Manager {
             if (user.deletePost(postId)) {
                 con.deletePostShare(postId);
                 System.out.println("Delete Post successful");
-                user.addNotification("Delete post have id "+postId +" Successful"+" ("+val.getDateNow()+")");
+                user.addNotification("Delete post have id " + postId + " Successful" + " (" + val.getDateNow() + ")");
             } else {
                 System.out.println("Delete Post fail");
-                user.addNotification("Delete post have id "+postId +" fail"+" ("+val.getDateNow()+")");
+                user.addNotification("Delete post have id " + postId + " fail" + " (" + val.getDateNow() + ")");
             }
         } else {
             System.out.println("Delete Post fail");
         }
     }
-
-    
 
     // friend===================================================
     public void addFriendByUser(User user) {
@@ -427,10 +415,10 @@ public class Manager {
         }
         if (con.addFriend(user, u2)) {
             System.out.println("Add friend successfull");
-            user.addNotification("You and "+u2.getName()+" are friend"+" ("+val.getDateNow()+")");
+            user.addNotification("You and " + u2.getName() + " are friend" + " (" + val.getDateNow() + ")");
         } else {
             System.out.println("Add friend fail");
-            user.addNotification("You and "+u2.getName()+" can't add friend"+"("+val.getDateNow()+")");
+            user.addNotification("You and " + u2.getName() + " can't add friend" + "(" + val.getDateNow() + ")");
         }
     }
 
@@ -439,11 +427,11 @@ public class Manager {
         User user2 = con.getUserById(id2);
         if (con.deleteFriend(user1, user2)) {
             System.out.println("Delete friend successful");
-            user1.addNotification("you deleted friend with "+user2.getName()+"("+val.getDateNow()+")");
-            user2.addNotification("you and "+user1.getName()+" aren't friend "+"("+val.getDateNow()+")");
+            user1.addNotification("you deleted friend with " + user2.getName() + "(" + val.getDateNow() + ")");
+            user2.addNotification("you and " + user1.getName() + " aren't friend " + "(" + val.getDateNow() + ")");
         } else {
             System.out.println("Delete friend fail");
-            user1.addNotification("you deleted friend with "+user2.getName()+"fail"+"("+val.getDateNow()+")");            
+            user1.addNotification("you deleted friend with " + user2.getName() + "fail" + "(" + val.getDateNow() + ")");
         }
     }
 
@@ -466,8 +454,8 @@ public class Manager {
         if (post != null) {
             user.addEmotion(post, emotion);
             System.out.println("Add emotion successful");
-            user.addNotification("You are "+emotion+ " to post have id "+post.getId()+"("+val.getDateNow()+")");
-            post.getUserPost().addNotification(user.getName()+" added "+emotion+" to your post have id "+post.getId()+"("+val.getDateNow()+")");
+            user.addNotification("You are " + emotion + " to post have id " + post.getId() + "(" + val.getDateNow() + ")");
+            post.getUserPost().addNotification(user.getName() + " added " + emotion + " to your post have id " + post.getId() + "(" + val.getDateNow() + ")");
         } else {
             System.out.println("Add emotion failed");
         }
@@ -490,12 +478,11 @@ public class Manager {
 
             // tìm những người dùng có bài viết này và thêm comment vào
             System.out.println("Add comment successfull");
-            post.getUserPost().addNotification(user.getName() + " commented: "+ comment + " to your post "+"("+val.getDateNow()+")");
+            post.getUserPost().addNotification(user.getName() + " commented: " + comment + " to your post " + "(" + val.getDateNow() + ")");
         } else {
             System.out.println("Add comment fail");
         }
     }
-    
 
     public Comment editComment(User u, Post p) {
         ArrayList<Comment> cmt = u.getCommented().get(p);
@@ -574,10 +561,10 @@ public class Manager {
     // tất cả các bài viết chứa post và edit tất cả
     public void viewInfomation(User u) {
         System.out.println("+----------------------------------+");
-        System.out.printf("| ID: %-28s %-10s\n" ,u.getUserID(), "|");
-        System.out.printf("| Name: %-26s %-10s\n" , u.getName(), "|");
-        System.out.printf("| Address: %-23s %-10s\n" , u.getAddress(), "|");
-        System.out.printf("| Date Of Birth: %-17s %-10s\n" , u.getDateOfBirth(), "|");
+        System.out.printf("| ID: %-28s %-10s\n", u.getUserID(), "|");
+        System.out.printf("| Name: %-26s %-10s\n", u.getName(), "|");
+        System.out.printf("| Address: %-23s %-10s\n", u.getAddress(), "|");
+        System.out.printf("| Date Of Birth: %-17s %-10s\n", u.getDateOfBirth(), "|");
         System.out.println("+----------------------------------+");
     }
 
@@ -619,7 +606,7 @@ public class Manager {
         if (newDate != null) {
             u.setDateOfBirth(newDate);
         }
-        u.addNotification("You are update profile successful "+"("+val.getDateNow()+")");
+        u.addNotification("You are update profile successful " + "(" + val.getDateNow() + ")");
     }
 
     public void search(User u) {
@@ -639,6 +626,4 @@ public class Manager {
 //        con.getListUser().BFSTraversal();
     }
 
-    
-    
 }

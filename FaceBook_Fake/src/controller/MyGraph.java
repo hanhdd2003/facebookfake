@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package controller;
 
 import java.util.HashSet;
@@ -11,10 +7,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-/**
- *
- * @author Asus
- */
+
 public class MyGraph<T> {
 
     Set<Vertex<T>> vertices = new HashSet<>();
@@ -33,23 +26,25 @@ public class MyGraph<T> {
     }
 
     public Vertex<T> getFirstVertexByIterator() {
-        if (vertices.isEmpty())
+        if (vertices.isEmpty()) {
             return null;
-        
+        }
+
         Iterator<Vertex<T>> iterator = vertices.iterator();
         return iterator.next();
     }
-    
+
     public Vertex<T> getFirstVertex() {
-        if (vertices.isEmpty())
+        if (vertices.isEmpty()) {
             return null;
-        
+        }
+
         for (Vertex<T> vertex : vertices) {
             return vertex;
         }
         return null;
     }
-    
+
     public Set<Vertex<T>> getVertices() {
         return vertices;
     }
@@ -73,37 +68,38 @@ public class MyGraph<T> {
     public void removeV(T label) {
         Vertex<T> vertexToRemove = getVertex(label);
         if (vertexToRemove != null) {
-            
+
             // xóa vertex trong vertices
             vertices.remove(vertexToRemove);
-            
+
             //xóa tất cả cạnh liên kết với vertex
             for (Vertex<T> vertice : vertices) {
                 vertice.getAdjList().remove(vertexToRemove);
             }
         }
     }
-    
+
     public void removeE(T u, T v) {
         Vertex<T> vertexU = getVertex(u);
         Vertex<T> vertexV = getVertex(v);
-        
+
         if (vertexU != null && vertexV != null) {
             vertexU.getAdjList().remove(vertexV);
             vertexV.getAdjList().remove(vertexU);
         }
     }
-    
+
     public boolean containEdge(T u, T v) {
         Vertex<T> vertexU = getVertex(u);
         Vertex<T> vertexV = getVertex(v);
-        
-        if (vertexU == null || vertexV == null)
+
+        if (vertexU == null || vertexV == null) {
             return false;
-        
+        }
+
         return vertexU.getAdjList().contains(vertexV);
     }
-    
+
     public void BFS(T start) {
         Set<Vertex<T>> visited = new HashSet<>();
         MyQueue<Vertex<T>> queue = new MyQueue<>();
@@ -143,8 +139,8 @@ public class MyGraph<T> {
             System.out.println("Start vertex not found");
         }
     }
-    
-        public void BFSTraversal(T start) {
+
+    public void BFSTraversal(T start) {
         Set<Vertex<T>> visited = new HashSet<>();
         Queue<Vertex<T>> queue = new LinkedList<>();
         Vertex<T> startVertex = getVertex(start);
